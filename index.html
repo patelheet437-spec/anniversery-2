@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 5th Month Engagement Anniversary, My Love! 💍❤️</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Serif+Gujarati:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cursor Heart Trail Canvas -->
+  <canvas id="cursorTrailCanvas"></canvas>
+  
+  <!-- Background Animated Canvases -->
+  <canvas id="starsCanvas"></canvas>
+  <canvas id="petalsCanvas"></canvas>
+
+  <!-- Ambient Floating Hearts Layer -->
+  <div id="floatingHeartsLayer" class="floating-hearts-layer"></div>
+
+  <!-- ==============================================
+       CINEMATIC INTRO / ROYAL ENVELOPE GATE
+       ============================================== -->
+  <div id="introOverlay" class="intro-overlay">
+    <!-- Animated particles behind envelope -->
+    <div class="intro-particles">
+      <div class="particle p1"></div>
+      <div class="particle p2"></div>
+      <div class="particle p3"></div>
+      <div class="particle p4"></div>
+      <div class="particle p5"></div>
+      <div class="particle p6"></div>
+      <div class="particle p7"></div>
+      <div class="particle p8"></div>
+      <div class="particle p9"></div>
+      <div class="particle p10"></div>
+      <div class="particle p11"></div>
+      <div class="particle p12"></div>
+    </div>
+
+    <div class="intro-envelope-wrapper">
+      <div class="intro-letter-card">
+        <!-- Decorative corner flourishes -->
+        <div class="corner-flourish top-left">✦</div>
+        <div class="corner-flourish top-right">✦</div>
+        <div class="corner-flourish bottom-left">✦</div>
+        <div class="corner-flourish bottom-right">✦</div>
+        
+        <div class="stamp-box">
+          <span class="stamp-heart">💍</span>
+          <span class="stamp-date">5 Months</span>
+        </div>
+        
+        <div class="intro-rings-animation">
+          <span class="ring ring-left">💍</span>
+          <span class="ring-heart">❤️</span>
+          <span class="ring ring-right">💍</span>
+        </div>
+        
+        <p class="intro-tagline">To The Queen Of My Heart</p>
+        
+        <h1 class="intro-title">
+          <span class="typewriter-line" id="typewriterLine">A Special Surprise Just For You...</span>
+        </h1>
+        
+        <p class="intro-desc">
+          Five months ago, our souls made a sacred promise. <br>
+          Tap the royal wax seal below to unveil our magical love story...
+        </p>
+        
+        <!-- Animated ornamental divider -->
+        <div class="ornamental-divider">
+          <span class="orn-line"></span>
+          <span class="orn-diamond">◆</span>
+          <span class="orn-line"></span>
+        </div>
+        
+        <div class="wax-seal-container" id="openSurpriseBtn">
+          <div class="wax-seal-glow-ring"></div>
+          <div class="wax-seal-glow-ring ring-2"></div>
+          <div class="wax-seal">
+            <i class="fa-solid fa-gem wax-gem"></i>
+            <span class="wax-text">OPEN</span>
+          </div>
+          <div class="tap-hint">✨ Touch the Seal to Enter & Play Our Song ✨</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       MAIN WEBSITE CONTENT
+       ============================================== -->
+  <div id="mainContent" class="main-content hidden">
+
+    <!-- Top Floating Navigation -->
+    <header class="top-nav-bar">
+      <div class="nav-brand">
+        <span class="nav-rings">💍✨</span>
+        <span class="nav-title" id="navCoupleTitle">Our 5-Month Love Story</span>
+      </div>
+      <div class="nav-actions">
+        <button id="btnOpenPhotoManager" class="nav-btn nav-btn-primary" title="Add your photos">
+          <i class="fa-solid fa-camera-retro"></i>
+          <span>📸 Add Photos</span>
+        </button>
+        <button id="btnOpenCustomizeModal" class="nav-btn" title="Edit names & date">
+          <i class="fa-solid fa-pen-nib"></i>
+          <span>✏️ Names & Date</span>
+        </button>
+        <button id="btnHeartBurst" class="nav-btn nav-btn-glow" title="Shower love fireworks">
+          <i class="fa-solid fa-heart"></i>
+          <span>Shower Love</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating Music Player -->
+    <aside class="floating-music-player" id="musicPlayer">
+      <div class="disc-wrapper" id="musicDisc">
+        <div class="vinyl-disc">
+          <div class="disc-label">
+            <i class="fa-solid fa-heart vinyl-heart"></i>
+          </div>
+        </div>
+      </div>
+      <div class="music-info">
+        <span class="music-status">Now Playing 🎵</span>
+        <span class="music-song-name" id="currentSongName">Raataan Lambiyan - Jubin Nautiyal & Asees Kaur</span>
+      </div>
+      <div class="music-controls">
+        <button id="btnTogglePlay" class="music-icon-btn" title="Play / Pause">
+          <i class="fa-solid fa-pause" id="playIcon"></i>
+        </button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.75" class="volume-slider" title="Volume">
+        <button id="btnUploadSong" class="music-icon-btn" title="Upload another song">
+          <i class="fa-solid fa-file-audio"></i>
+        </button>
+        <input type="file" id="songFileInput" accept="audio/*" style="display:none;">
+      </div>
+    </aside>
+
+    <audio id="romanticAudio" loop preload="auto">
+      <source src="audio/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero-section reveal-section">
+      <div class="hero-ambient-glow glow-1"></div>
+      <div class="hero-ambient-glow glow-2"></div>
+      <div class="hero-ambient-glow glow-3"></div>
+
+      <div class="hero-glass-card">
+        <div class="card-shine"></div>
+        
+        <div class="hero-badge animate-float">
+          <span class="badge-icon">💖</span>
+          <span>5 Months of Pure Bliss & Engagement</span>
+          <span class="badge-icon">💖</span>
+        </div>
+
+        <h1 class="hero-main-title">
+          Happy 5th Month<br>Engagement Anniversary,
+          <span class="bride-highlight" id="displayBrideName">My Dearest Fiancée</span>!
+        </h1>
+
+        <p class="hero-subtitle">
+          "From the day we exchanged rings, every second with you has been a blessing from God. 
+          Here's to 5 months of laughs, endless talks, and a lifetime of forever ahead."
+        </p>
+
+        <!-- Live Counter -->
+        <div class="love-counter-container">
+          <div class="counter-header">
+            <div class="counter-pulse-dot"></div>
+            <i class="fa-solid fa-infinity counter-icon"></i>
+            <span>Time Since We Said "YES" To Forever</span>
+            <div class="counter-pulse-dot"></div>
+          </div>
+          <div class="counter-grid">
+            <div class="time-box">
+              <span class="time-val" id="cntMonths">5</span>
+              <span class="time-lbl">Months</span>
+            </div>
+            <div class="time-box">
+              <span class="time-val" id="cntDays">153</span>
+              <span class="time-lbl">Days</span>
+            </div>
+            <div class="time-box">
+              <span class="time-val" id="cntHours">00</span>
+              <span class="time-lbl">Hours</span>
+            </div>
+            <div class="time-box">
+              <span class="time-val" id="cntMinutes">00</span>
+              <span class="time-lbl">Minutes</span>
+            </div>
+            <div class="time-box">
+              <span class="time-val" id="cntSeconds">00</span>
+              <span class="time-lbl">Seconds</span>
+            </div>
+          </div>
+          <div class="counter-footer">
+            <span id="displayCoupleNames">You & Me ❤️</span> • 
+            <span id="displayEngageDate">Engaged with Love</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#photoGallery" class="btn-hero-primary">
+            <i class="fa-solid fa-images"></i> Explore Our Memories
+          </a>
+          <a href="#gujaratiShayari" class="btn-hero-secondary">
+            <i class="fa-solid fa-feather-pointed"></i> વાંચો પ્રેમની શાયરી
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ANIMATED SECTION DIVIDER ========== -->
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-ornament">
+        <span>💍</span>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ========== PHOTO GALLERY ========== -->
+    <section class="gallery-section reveal-section" id="photoGallery">
+      <div class="section-title-wrap">
+        <span class="section-tag">Capturing Our Beautiful Journey</span>
+        <h2 class="section-heading">Our Memory Scrapbook 📸</h2>
+        <p class="section-subtext">
+          Every picture holds a thousand heartbeats. 
+          <br>
+          <span class="subtext-tip">Click <strong>"📷 Change Photo"</strong> on any frame to add your real photos!</span>
+        </p>
+      </div>
+
+      <div class="polaroid-grid">
+        <!-- Polaroid Card 1 -->
+        <div class="polaroid-card tilt-left reveal-card" data-slot="1">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo1.jpg" alt="My Beautiful Queen" id="imgSlot1" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(1)">
+                <i class="fa-solid fa-camera"></i> Change Photo
+              </button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot1')">
+                <i class="fa-solid fa-expand"></i> View
+              </button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">My Beautiful Queen 👸</h3>
+            <p class="polaroid-note">The most gorgeous face that makes my heart skip a beat every single time.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 2 -->
+        <div class="polaroid-card tilt-right reveal-card" data-slot="2">
+          <div class="polaroid-tape tape-pink"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo2.jpg" alt="Together Forever" id="imgSlot2" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(2)">
+                <i class="fa-solid fa-camera"></i> Change Photo
+              </button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot2')">
+                <i class="fa-solid fa-expand"></i> View
+              </button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">Us Together 💑</h3>
+            <p class="polaroid-note">My favorite place in the world is right next to you.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 3 -->
+        <div class="polaroid-card tilt-left reveal-card" data-slot="3">
+          <div class="polaroid-tape tape-gold"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo3.jpg" alt="The Warmest Hug" id="imgSlot3" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(3)">
+                <i class="fa-solid fa-camera"></i> Change Photo
+              </button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot3')">
+                <i class="fa-solid fa-expand"></i> View
+              </button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">The Warmest Hug 🤗💕</h3>
+            <p class="polaroid-note">In your arms is where I find my peace and my forever home.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 4 -->
+        <div class="polaroid-card tilt-right reveal-card" data-slot="4">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo4.jpg" alt="Our Fun Date" id="imgSlot4" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(4)">
+                <i class="fa-solid fa-camera"></i> Change Photo
+              </button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot4')">
+                <i class="fa-solid fa-expand"></i> View
+              </button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">Our Date Nights 🍕😍</h3>
+            <p class="polaroid-note">Every outing with you turns into the best memory of my life.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 5 -->
+        <div class="polaroid-card tilt-left reveal-card" data-slot="5">
+          <div class="polaroid-tape tape-pink"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo5.jpg" alt="Engagement Couple Portrait" id="imgSlot5" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(5)"><i class="fa-solid fa-camera"></i> Change Photo</button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot5')"><i class="fa-solid fa-expand"></i> View</button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">Her Gorgeous Eyes 😍💍</h3>
+            <p class="polaroid-note">Those eyes hold the entire universe I want to live in forever.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 6 -->
+        <div class="polaroid-card tilt-right reveal-card" data-slot="6">
+          <div class="polaroid-tape tape-gold"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo6.jpg" alt="Moonlit Beach Together" id="imgSlot6" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(6)"><i class="fa-solid fa-camera"></i> Change Photo</button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot6')"><i class="fa-solid fa-expand"></i> View</button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">Under The Moonlight 🌙</h3>
+            <p class="polaroid-note">Even the moon blushes watching us together.</p>
+          </div>
+        </div>
+
+        <!-- Polaroid Card 7 -->
+        <div class="polaroid-card tilt-left reveal-card" data-slot="7">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-img-wrap">
+            <img src="images/photo7.jpg" alt="Our Promise Rings" id="imgSlot7" class="polaroid-img">
+            <div class="img-overlay-actions">
+              <button class="btn-slot-upload" onclick="triggerSlotUpload(7)"><i class="fa-solid fa-camera"></i> Change Photo</button>
+              <button class="btn-slot-zoom" onclick="zoomImage('imgSlot7')"><i class="fa-solid fa-expand"></i> View</button>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <h3 class="polaroid-title">Promise of Forever 🕯️💍</h3>
+            <p class="polaroid-note">These rings hold a promise deeper than the ocean.</p>
+          </div>
+        </div>
+
+        <!-- Upload More Card -->
+        <div class="polaroid-card custom-add-card reveal-card" onclick="openPhotoManagerModal()">
+          <div class="add-card-inner">
+            <div class="add-icon-ring">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+            <h3>Upload More Photos</h3>
+            <p>Click to upload your engagement & couple photos!</p>
+            <span class="add-badge">Upload Any Photo</span>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="slotFileInput" accept="image/*" style="display:none;">
+    </section>
+
+    <!-- ========== SECTION DIVIDER ========== -->
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-ornament"><span>🌹</span></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ========== GUJARATI SHAYARI ========== -->
+    <section class="shayari-section reveal-section" id="gujaratiShayari">
+      <div class="section-title-wrap">
+        <span class="section-tag">દિલના ઉમળકા • ગુજરાતી શાયરી</span>
+        <h2 class="section-heading">પ્રેમની મીઠી વાતો 🌹</h2>
+        <p class="section-subtext">
+          સગાઈના ૫ મહિનાની મીઠી સફર માટે ખાસ તારા માટે લખેલી દિલને સ્પર્શતી પંક્તિઓ...
+        </p>
+      </div>
+
+      <div class="shayari-cards-container">
+        <!-- Shayari 1 -->
+        <div class="shayari-card reveal-card">
+          <div class="shayari-glow-border"></div>
+          <div class="shayari-card-corner">💍</div>
+          <div class="gujarati-ornament">༺ ✦ ༻</div>
+          <p class="gujarati-text">
+            "તારા વગરનું જીવન હવે અધૂરું લાગે છે,<br>
+            તું સાથે હોય ત્યારે દરેક ક્ષણ સોનેરી લાગે છે.<br>
+            સગાઈના આ ૫ મહિના તો બસ એક સુંદર શરૂઆત છે,<br>
+            હજુ તો આખી જિંદગી તારી સાથે પ્રેમથી જીવવી છે!"
+          </p>
+          <div class="shayari-divider"></div>
+          <p class="shayari-meaning">
+            <i class="fa-solid fa-quote-left"></i>
+            Without you, life feels incomplete. With you, every single moment turns to pure gold. 
+            These 5 months are just a glimpse of the beautiful lifetime ahead.
+          </p>
+          <div class="shayari-actions">
+            <button class="btn-copy-shayari" onclick="copyShayari(this, 1)">
+              <i class="fa-regular fa-copy"></i> Copy Shayari
+            </button>
+            <span class="shayari-badge">Happy 5 Months ❤️</span>
+          </div>
+        </div>
+
+        <!-- Shayari 2 -->
+        <div class="shayari-card highlight-card reveal-card">
+          <div class="shayari-glow-border"></div>
+          <div class="shayari-card-corner">💖</div>
+          <div class="gujarati-ornament">༺ ✦ ༻</div>
+          <p class="gujarati-text">
+            "જેમ કાગળ વગર કલમ અધૂરી છે,<br>
+            તેમ તારા વગર મારી જિંદગી અધૂરી છે.<br>
+            સગાઈના આ પાંચ મહિનામાં તેં એટલો પ્રેમ આપ્યો છે,<br>
+            કે હવે દરેક શ્વાસમાં બસ તારું જ નામ છે!"
+          </p>
+          <div class="shayari-divider"></div>
+          <p class="shayari-meaning">
+            <i class="fa-solid fa-quote-left"></i>
+            Just as ink is incomplete without paper, my life is incomplete without you. 
+            In these 5 months, you showered me with so much love that every breath whispers your name.
+          </p>
+          <div class="shayari-actions">
+            <button class="btn-copy-shayari" onclick="copyShayari(this, 2)">
+              <i class="fa-regular fa-copy"></i> Copy Shayari
+            </button>
+            <span class="shayari-badge">My Forever 💍</span>
+          </div>
+        </div>
+
+        <!-- Shayari 3 -->
+        <div class="shayari-card reveal-card">
+          <div class="shayari-glow-border"></div>
+          <div class="shayari-card-corner">✨</div>
+          <div class="gujarati-ornament">༺ ✦ ༻</div>
+          <p class="gujarati-text">
+            "હાથમાં તારો હાથ હોય,<br>
+            અને દિલમાં તારો સાથ હોય,<br>
+            આનાથી વધારે સુંદર બીજું શું હોઈ શકે?<br>
+            ૫ મહિના પૂરા થયા, હવે બસ તને મારી દુલ્હન બનાવવાની રાહ છે!"
+          </p>
+          <div class="shayari-divider"></div>
+          <p class="shayari-meaning">
+            <i class="fa-solid fa-quote-left"></i>
+            Holding your hand, having your heart by my side... what could be more heavenly? 
+            5 months completed, counting the moments until you walk down the aisle.
+          </p>
+          <div class="shayari-actions">
+            <button class="btn-copy-shayari" onclick="copyShayari(this, 3)">
+              <i class="fa-regular fa-copy"></i> Copy Shayari
+            </button>
+            <span class="shayari-badge">Future Wife 👰</span>
+          </div>
+        </div>
+
+        <!-- Shayari 4 -->
+        <div class="shayari-card reveal-card">
+          <div class="shayari-glow-border"></div>
+          <div class="shayari-card-corner">🌸</div>
+          <div class="gujarati-ornament">༺ ✦ ༻</div>
+          <p class="gujarati-text">
+            "તારી એક સ્માઈલ જોઈને મારો આખો દિવસ બની જાય છે,<br>
+            સગાઈ થઈ ત્યારથી તું જ મારી દુનિયા બની ગઈ છે.<br>
+            ભગવાન કરે આપણો આ પ્રેમ કાયમ આમ જ મહેકતો રહે,<br>
+            હેપ્પી ૫ મંથ્સ એનિવર્સરી મારી વાહલી!"
+          </p>
+          <div class="shayari-divider"></div>
+          <p class="shayari-meaning">
+            <i class="fa-solid fa-quote-left"></i>
+            Just one smile of yours brightens up my darkest days. Since engagement, you became my universe. 
+            May our love blossom forever!
+          </p>
+          <div class="shayari-actions">
+            <button class="btn-copy-shayari" onclick="copyShayari(this, 4)">
+              <i class="fa-regular fa-copy"></i> Copy Shayari
+            </button>
+            <span class="shayari-badge">દિલથી પ્રેમ ❤️</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION DIVIDER ========== -->
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-ornament"><span>💌</span></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ========== 5 SECRET LOVE ENVELOPES ========== -->
+    <section class="secrets-section reveal-section">
+      <div class="section-title-wrap">
+        <span class="section-tag">Interactive Love Notes</span>
+        <h2 class="section-heading">5 Months • 5 Little Secrets ✨</h2>
+        <p class="section-subtext">Click on each envelope to reveal what my heart felt during each month...</p>
+      </div>
+
+      <div class="secrets-grid">
+        <div class="secret-card reveal-card" onclick="flipSecretCard(this)">
+          <div class="secret-card-inner">
+            <div class="secret-front">
+              <span class="secret-month-pill">Month 1</span>
+              <div class="secret-icon"><i class="fa-solid fa-ring"></i></div>
+              <h3>The Day of Magic</h3>
+              <p class="secret-prompt">Tap to Reveal 💌</p>
+            </div>
+            <div class="secret-back">
+              <h4>Month 1: The Ring Day</h4>
+              <p>When I placed that ring on your finger and you looked into my eyes, I knew my search for true love had ended. You were breathtakingly gorgeous!</p>
+              <span class="secret-tag">Forever etched in my heart</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="secret-card reveal-card" onclick="flipSecretCard(this)">
+          <div class="secret-card-inner">
+            <div class="secret-front">
+              <span class="secret-month-pill">Month 2</span>
+              <div class="secret-icon"><i class="fa-solid fa-moon"></i></div>
+              <h3>Midnight Whispers</h3>
+              <p class="secret-prompt">Tap to Reveal 💌</p>
+            </div>
+            <div class="secret-back">
+              <h4>Month 2: Late Night Talks</h4>
+              <p>Remember those endless phone calls until 2 AM? Laughing about silly things and sharing our deepest dreams made me fall deeper in love every night.</p>
+              <span class="secret-tag">My 2 AM favorite thought</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="secret-card reveal-card" onclick="flipSecretCard(this)">
+          <div class="secret-card-inner">
+            <div class="secret-front">
+              <span class="secret-month-pill">Month 3</span>
+              <div class="secret-icon"><i class="fa-solid fa-face-smile-beam"></i></div>
+              <h3>Your Comforting Smile</h3>
+              <p class="secret-prompt">Tap to Reveal 💌</p>
+            </div>
+            <div class="secret-back">
+              <h4>Month 3: My Safe Haven</h4>
+              <p>Whenever work was stressful, hearing your voice instantly washed away all tiredness. You became my peace, my calm, and my home.</p>
+              <span class="secret-tag">You are my serenity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="secret-card reveal-card" onclick="flipSecretCard(this)">
+          <div class="secret-card-inner">
+            <div class="secret-front">
+              <span class="secret-month-pill">Month 4</span>
+              <div class="secret-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <h3>Understanding Us</h3>
+              <p class="secret-prompt">Tap to Reveal 💌</p>
+            </div>
+            <div class="secret-back">
+              <h4>Month 4: True Companionship</h4>
+              <p>Learning all your favorite foods, your little habits, and seeing how deeply you care for me and my family. You truly are the greatest gift God gave me.</p>
+              <span class="secret-tag">Pure gold soul</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="secret-card reveal-card" onclick="flipSecretCard(this)">
+          <div class="secret-card-inner">
+            <div class="secret-front">
+              <span class="secret-month-pill">Month 5</span>
+              <div class="secret-icon"><i class="fa-solid fa-infinity"></i></div>
+              <h3>Today & Always</h3>
+              <p class="secret-prompt">Tap to Reveal 💌</p>
+            </div>
+            <div class="secret-back">
+              <h4>Month 5: Counting to Wedding</h4>
+              <p>Here we are today, celebrating 5 glorious months! I am prouder than ever to call you my fiancée, and I cannot wait for the day you become my wife forever!</p>
+              <span class="secret-tag">Love you to infinity ❤️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION DIVIDER ========== -->
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-ornament"><span>📜</span></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ========== ROYAL LOVE LETTER ========== -->
+    <section class="letter-section reveal-section">
+      <div class="parchment-letter">
+        <div class="parchment-texture"></div>
+        <div class="letter-seal-stamp">
+          <span>💍</span>
+        </div>
+        <!-- decorative wax drip -->
+        <div class="wax-drip"></div>
+        
+        <span class="letter-salutation">My Dearest Fiancée,</span>
+        
+        <div class="letter-body">
+          <p>
+            They say time flies when you are happy, but with you, every single second feels like poetry. 
+            It has been five beautiful months since we held hands and promised each other our tomorrows.
+          </p>
+          <p>
+            In these five months, you didn't just become my fiancée; you became my best friend, my confidante, 
+            and the most precious reason behind my smile. 
+            I look at the ring on your hand and still feel that same rush of wonder—thanking the universe that 
+            out of all the people in this world, our paths intertwined.
+          </p>
+          <p class="letter-gujarati-highlight">
+            "તારી સાથેનું મારું આ બંધન ફક્ત આ જિંદગી પૂરતું નથી, <br>
+            પરંતુ આવનારા સાત જન્મો માટે મારી આત્માએ તારો સંગ પસંદ કર્યો છે."
+          </p>
+          <p>
+            I promise to always listen to you, to hold you tight during life's storms, to celebrate every joy together, 
+            and to love you even more tenderly as we step closer to our wedding day.
+          </p>
+          <p class="letter-sign">
+            Forever and always yours,<br>
+            <span class="groom-signature" id="displayGroomName">Your Fiancé ❤️</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION DIVIDER ========== -->
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-ornament"><span>💖</span></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ========== PLAYFUL LOVE PROMISE ========== -->
+    <section class="playful-section reveal-section">
+      <div class="playful-card">
+        <div class="card-shine"></div>
+        <span class="playful-emoji">💖💍👰</span>
+        <h2>A Quick Question For My Fiancée...</h2>
+        <p class="playful-question">Will you love me, tolerate my silly jokes, and be my queen forever?</p>
+        <div class="playful-buttons" id="questionBtnWrap">
+          <button id="btnYesAnswer" class="btn-love-yes" onclick="celebrateYesAnswer()">
+            YES! Forever & Always! ❤️
+          </button>
+          <button id="btnNoAnswer" class="btn-love-no" onmouseover="dodgeNoButton()" onclick="dodgeNoButton()">
+            No 😜
+          </button>
+        </div>
+        <div id="yesSuccessMessage" class="yes-success-message hidden">
+          <h3>🎉 I Knew It! You Have No Escape From My Love! 💍❤️</h3>
+          <p>Happy 5 Months Engagement Anniversary, My Sweetheart!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="romantic-footer">
+      <div class="footer-rings">💍✨💖</div>
+      <p class="footer-text">Crafted with infinite love for our 5th Month Engagement Anniversary.</p>
+      <p class="footer-names">
+        <span id="footerCoupleText">Him & Her</span> • Forever Begins Today
+      </p>
+    </footer>
+  </div>
+
+  <!-- ========== PHOTO MANAGER MODAL ========== -->
+  <div id="photoManagerModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-camera-retro modal-icon"></i>
+          <div>
+            <h3>Add Your Own Photos 📸</h3>
+            <p>Upload your real engagement & romantic couple photos!</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closePhotoManagerModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="photo-upload-banner">
+          <i class="fa-solid fa-lightbulb"></i>
+          <span>Click <strong>"Choose Photo"</strong> on any slot to select photos from your device. They save automatically!</span>
+        </div>
+        <div class="photo-slots-grid">
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo1.jpg" id="modalThumb1" alt="Slot 1"></div>
+            <div class="slot-info">
+              <h4>Photo 1: The Ring Ceremony 💍</h4>
+              <p>Your ring exchange or engagement ritual photo</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 1<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 1)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo2.jpg" id="modalThumb2" alt="Slot 2"></div>
+            <div class="slot-info">
+              <h4>Photo 2: Romantic Couple Pose 🌅</h4>
+              <p>Holding hands, sunset or photoshoot</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 2<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 2)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo3.jpg" id="modalThumb3" alt="Slot 3"></div>
+            <div class="slot-info">
+              <h4>Photo 3: Candid Joy & Date ☕</h4>
+              <p>Laughing together, cafe date</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 3<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 3)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo4.jpg" id="modalThumb4" alt="Slot 4"></div>
+            <div class="slot-info">
+              <h4>Photo 4: Hand in Hand / Rings ✨</h4>
+              <p>Close up of hands with rings or selfie</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 4<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 4)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo5.jpg" id="modalThumb5" alt="Slot 5"></div>
+            <div class="slot-info">
+              <h4>Photo 5: Couple Portrait 👫</h4>
+              <p>Together portrait or ceremony photo</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 5<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 5)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo6.jpg" id="modalThumb6" alt="Slot 6"></div>
+            <div class="slot-info">
+              <h4>Photo 6: Moonlight Moment 🌙</h4>
+              <p>Night walk, starlight or romantic moment</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 6<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 6)"></label>
+            </div>
+          </div>
+          <div class="photo-slot-card">
+            <div class="slot-thumb-wrap"><img src="images/photo7.jpg" id="modalThumb7" alt="Slot 7"></div>
+            <div class="slot-info">
+              <h4>Photo 7: Ring Close-Up 💍🕯️</h4>
+              <p>Close up of rings, candles or roses</p>
+              <label class="btn-upload-file"><i class="fa-solid fa-upload"></i> Choose Photo 7<input type="file" accept="image/*" onchange="handleModalPhotoUpload(event, 7)"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-reset" onclick="resetPhotosToDefaults()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+        <button class="btn-modal-done" onclick="closePhotoManagerModal()"><i class="fa-solid fa-check"></i> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CUSTOMIZE NAMES MODAL ========== -->
+  <div id="customizeModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-heart-pulse modal-icon"></i>
+          <div>
+            <h3>Customize Names & Date ✍️</h3>
+            <p>Personalize with your names and engagement date!</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeCustomizeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputBrideName"><i class="fa-solid fa-crown"></i> Her Name (Fiancée):</label>
+          <input type="text" id="inputBrideName" placeholder="e.g., Priya / My Queen" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="inputGroomName"><i class="fa-solid fa-user"></i> Your Name (Fiancé):</label>
+          <input type="text" id="inputGroomName" placeholder="e.g., Rahul" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="inputEngagementDate"><i class="fa-solid fa-calendar-heart"></i> Engagement Date:</label>
+          <input type="date" id="inputEngagementDate" class="form-input">
+          <small class="form-help">Select the date of your engagement for the live timer.</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-done" onclick="saveCustomDetails()"><i class="fa-solid fa-floppy-disk"></i> Save & Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== LIGHTBOX ========== -->
+  <div id="lightboxModal" class="lightbox-backdrop hidden" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img src="" id="lightboxImg" alt="Enlarged photo">
+      <p id="lightboxCaption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toastNotification" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
